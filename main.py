@@ -9,7 +9,7 @@ st.title('Streamlit for Sales Usecase')
 st.write('This is a Streamlit app for the Sales Usecase.')
 
 # Streamlit Chatbox
-request_url = "http://127.0.0.1:5000/ask"
+request_url = "https://dbbackend001.azurewebsites.net/ask"
 
 # Initialize chat history
 if "messages" not in st.session_state:
