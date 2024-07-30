@@ -1,4 +1,6 @@
 pybase64
-requests
 streamlit 
 flask
+requests
+pandas
+Pillow
