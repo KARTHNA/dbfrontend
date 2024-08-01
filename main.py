@@ -17,20 +17,22 @@ def add_new_chat():
     if st.session_state.current_chat["messages"]:
         st.session_state.chat_history.append(st.session_state.current_chat)
     st.session_state.current_chat = {"messages": [], "name": f"Chat {len(st.session_state.chat_history) + 1}"}
-    st.experimental_rerun()
+    st.experimental_set_query_params(rerun=True)
 
 def select_chat(index):
     st.session_state.chat_history.append(st.session_state.current_chat)
     st.session_state.current_chat = st.session_state.chat_history.pop(index)
-    st.experimental_rerun()
+    st.experimental_set_query_params(rerun=True)
 
 def delete_chat(index):
     st.session_state.chat_history.pop(index)
     for i in range(len(st.session_state.chat_history)):
         st.session_state.chat_history[i]["name"] = f"Chat {i + 1}"
+    st.experimental_set_query_params(rerun=True)
 
 def rename_chat(index, new_name):
     st.session_state.chat_history[index]["name"] = new_name
+    st.experimental_set_query_params(rerun=True)
 
 # Custom CSS for expanding the sidebar
 st.markdown(
@@ -73,12 +75,8 @@ st.markdown(
 # Sidebar for chat history
 with st.sidebar:
     st.title("Chat History")
-    col1, col2 = st.columns([3, 3])
-    with col1:
-        if st.button("New Chat"):
-            add_new_chat()
-    with col2:
-        st.write("")  # Empty space to align "Current Chat" with the button
+    if st.button("New Chat"):
+        add_new_chat()
 
     st.markdown(f"<div class='chat-info'>Current Chat: <span class='current-chat'>{st.session_state.current_chat['name']}</span></div>", unsafe_allow_html=True)
 
@@ -94,14 +92,11 @@ with st.sidebar:
             with st.expander(expander_text, expanded=is_current_chat):
                 if st.button(f"Select {chat['name']}", key=f"select_{i}"):
                     select_chat(i)
-                    st.experimental_rerun()
                 if st.button(f"Delete {chat['name']}", key=f"delete_{i}"):
                     delete_chat(i)
-                    st.experimental_rerun()
                 new_name = st.text_input(f"Rename {chat['name']}", chat['name'], key=f"rename_{i}")
                 if st.button(f"Rename {chat['name']}", key=f"rename_button_{i}"):
                     rename_chat(i, new_name)
-                    st.experimental_rerun()
 
 # Main App Title with current chat name
 st.title(f"Streamlit for Sales Usecase - {st.session_state.current_chat['name']}")
