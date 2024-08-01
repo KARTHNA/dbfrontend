@@ -6,7 +6,7 @@ import pandas as pd
 from io import BytesIO
 from PIL import Image
 
-# Initialize chat history
+# For chat history
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
