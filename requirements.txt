@@ -1,6 +1,6 @@
 pybase64
-streamlit 
 flask
 requests
 pandas
 Pillow
+streamlit>=1.10.0
