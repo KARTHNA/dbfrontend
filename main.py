@@ -34,7 +34,7 @@ def rename_chat(index, new_name):
     st.session_state.chat_history[index]["name"] = new_name
     # st.rerun()
 
-# Custom CSS for expanding the sidebar
+# Custom CSS for sidebar
 st.markdown(
     """
     <style>
@@ -72,7 +72,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Sidebar for chat history
+# Sidebar for chat history and to access our previous chat 
 with st.sidebar:
     st.title("Chat History")
     col1, col2 = st.columns([3, 3])
@@ -80,7 +80,7 @@ with st.sidebar:
         if st.button("New Chat"):
             add_new_chat()
     with col2:
-        st.write("")  # Empty space to align "Current Chat" with the button
+        st.write("")  
 
     st.markdown(f"<div class='chat-info'>Current Chat: <span class='current-chat'>{st.session_state.current_chat['name']}</span></div>", unsafe_allow_html=True)
 
@@ -105,7 +105,7 @@ with st.sidebar:
                     rename_chat(i, new_name)
                     st.rerun()
 
-# Main App Title with current chat name
+
 st.title(f"Streamlit for Sales Usecase - {st.session_state.current_chat['name']}")
 st.write("This is a Streamlit app for the Sales Usecase.")
 
@@ -135,7 +135,7 @@ if prompt := st.chat_input("Type something..."):
         st.markdown(prompt)
     st.session_state.current_chat["messages"].append({"role": "user", "type": "text", "content": prompt})
     
-    # Get response from the backend
+    # Response from the backend
     request_url = "https://dbbackend001.azurewebsites.net/ask"
     try:
         response = requests.post(request_url, json={"question": prompt}).json()
