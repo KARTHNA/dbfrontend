@@ -10,7 +10,7 @@ from PIL import Image
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-if "current_chat_using" not in st.session_state:
+if "current_chat" not in st.session_state:
     st.session_state.current_chat = {"messages": [], "name": f"Chat {len(st.session_state.chat_history) + 1}"}
 
 def add_new_chat():
