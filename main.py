@@ -17,21 +17,25 @@ def add_new_chat():
     if st.session_state.current_chat["messages"]:
         st.session_state.chat_history.append(st.session_state.current_chat)
     st.session_state.current_chat = {"messages": [], "name": f"Chat {len(st.session_state.chat_history) + 1}"}
+    # Update query parameters to trigger a rerun
     st.experimental_set_query_params(rerun=True)
 
 def select_chat(index):
     st.session_state.chat_history.append(st.session_state.current_chat)
     st.session_state.current_chat = st.session_state.chat_history.pop(index)
+    # Update query parameters to trigger a rerun
     st.experimental_set_query_params(rerun=True)
 
 def delete_chat(index):
     st.session_state.chat_history.pop(index)
     for i in range(len(st.session_state.chat_history)):
         st.session_state.chat_history[i]["name"] = f"Chat {i + 1}"
+    # Update query parameters to trigger a rerun
     st.experimental_set_query_params(rerun=True)
 
 def rename_chat(index, new_name):
     st.session_state.chat_history[index]["name"] = new_name
+    # Update query parameters to trigger a rerun
     st.experimental_set_query_params(rerun=True)
 
 # Custom CSS for expanding the sidebar
@@ -75,8 +79,12 @@ st.markdown(
 # Sidebar for chat history
 with st.sidebar:
     st.title("Chat History")
-    if st.button("New Chat"):
-        add_new_chat()
+    col1, col2 = st.columns([3, 3])
+    with col1:
+        if st.button("New Chat"):
+            add_new_chat()
+    with col2:
+        st.write("")  # Empty space to align "Current Chat" with the button
 
     st.markdown(f"<div class='chat-info'>Current Chat: <span class='current-chat'>{st.session_state.current_chat['name']}</span></div>", unsafe_allow_html=True)
 
