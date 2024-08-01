@@ -134,7 +134,7 @@ if prompt := st.chat_input("Type something..."):
     st.session_state.current_chat["messages"].append({"role": "user", "type": "text", "content": prompt})
     
     # Get response from the backend
-    request_url = "http://127.0.0.1:5000/ask"
+    request_url = "https://dbbackend001.azurewebsites.net/ask"
     try:
         response = requests.post(request_url, json={"question": prompt}).json()
         if 'error' in response:
